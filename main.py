@@ -1,5 +1,8 @@
 from time import strftime, localtime
 import os
+from dotenv import load_dotenv, dotenv_values
+
+load_dotenv()
 
 # firebase part
 import firebase_admin
@@ -7,7 +10,7 @@ from firebase_admin import db
 
 cred_obj = firebase_admin.credentials.Certificate('creds.json')
 default_app = firebase_admin.initialize_app(cred_obj, {
-    'databaseURL': os.getenv("RTDB_TOKEN")
+    'databaseURL': str(os.getenv("RTDB_TOKEN"))
 })
 
 # data
@@ -63,4 +66,4 @@ Pulse: {message["content"]["pulse"]}
 async def on_ready():
     scanForMessage.start() # important to start the loop
 
-bot.run(os.getenv("DISCORD_BOT_TOKEN"))
+bot.run(str(os.getenv("DISCORD_BOT_TOKEN")))
